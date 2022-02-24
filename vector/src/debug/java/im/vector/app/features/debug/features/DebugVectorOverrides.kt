@@ -22,19 +22,24 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.preferencesDataStore
+import im.vector.app.features.HomeserverCapabilitiesOverride
 import im.vector.app.features.VectorOverrides
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import org.matrix.android.sdk.api.extensions.orFalse
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "vector_overrides")
 private val forceDialPadDisplay = booleanPreferencesKey("force_dial_pad_display")
 private val forceLoginFallback = booleanPreferencesKey("force_login_fallback")
+private val forceCanChangeDisplayName = booleanPreferencesKey("force_can_change_display_name")
+private val forceCanChangeAvatar = booleanPreferencesKey("force_can_change_avatar")
 
 class DebugVectorOverrides(private val context: Context) : VectorOverrides {
 
     override fun forceDialPad() = forceDialPadDisplayFlow
     override fun forceLoginFallback() = forceLoginFallbackFlow
+    override fun forceHomeserverCapabilities() = forceHomeserverCapabilities
 
     suspend fun setForceDialPadDisplay(force: Boolean) {
         context.dataStore.edit { settings ->
@@ -54,5 +59,26 @@ class DebugVectorOverrides(private val context: Context) : VectorOverrides {
 
     private val forceLoginFallbackFlow: Flow<Boolean> = context.dataStore.data.map { preferences ->
         preferences[forceLoginFallback].orFalse()
+    }
+
+    suspend fun updateHomeserverCapabilities(block: HomeserverCapabilitiesOverride.() -> HomeserverCapabilitiesOverride) {
+        val capabilitiesOverride = block(forceHomeserverCapabilities.firstOrNull() ?: HomeserverCapabilitiesOverride(null, null))
+        context.dataStore.edit { settings ->
+            when (capabilitiesOverride.canChangeDisplayName) {
+                null -> settings.remove(forceCanChangeDisplayName)
+                else -> settings[forceCanChangeDisplayName] = capabilitiesOverride.canChangeDisplayName
+            }
+            when (capabilitiesOverride.canChangeAvatar) {
+                null -> settings.remove(forceCanChangeAvatar)
+                else -> settings[forceCanChangeAvatar] = capabilitiesOverride.canChangeAvatar
+            }
+        }
+    }
+
+    private val forceHomeserverCapabilities: Flow<HomeserverCapabilitiesOverride> = context.dataStore.data.map { preferences ->
+        HomeserverCapabilitiesOverride(
+                canChangeDisplayName = preferences[forceCanChangeDisplayName],
+                canChangeAvatar = preferences[forceCanChangeAvatar]
+        )
     }
 }
