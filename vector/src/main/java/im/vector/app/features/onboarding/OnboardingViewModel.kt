@@ -47,7 +47,6 @@ import im.vector.app.features.login.LoginMode
 import im.vector.app.features.login.ReAuthHelper
 import im.vector.app.features.login.ServerType
 import im.vector.app.features.login.SignMode
-import im.vector.app.features.settings.VectorDataStore
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
@@ -85,7 +84,7 @@ class OnboardingViewModel @AssistedInject constructor(
         private val analyticsTracker: AnalyticsTracker,
         private val vectorOverrides: VectorOverrides,
         private val uriFilenameResolver: UriFilenameResolver
-        ) : VectorViewModel<OnboardingViewState, OnboardingAction, OnboardingViewEvents>(initialState) {
+) : VectorViewModel<OnboardingViewState, OnboardingAction, OnboardingViewEvents>(initialState) {
 
     @AssistedFactory
     interface Factory : MavericksAssistedViewModelFactory<OnboardingViewModel, OnboardingViewState> {
@@ -935,7 +934,9 @@ class OnboardingViewModel @AssistedInject constructor(
             when {
                 it.supportsChangingDisplayName    -> _viewEvents.post(OnboardingViewEvents.OnChooseDisplayName)
                 it.supportsChangingProfilePicture -> _viewEvents.post(OnboardingViewEvents.OnChooseDisplayName)
-                else                              -> throw IllegalStateException("It should not be possible to personalize without supporting display name or avatar changing")
+                else                              -> {
+                    throw IllegalStateException("It should not be possible to personalize without supporting display name or avatar changing")
+                }
             }
         }
     }
