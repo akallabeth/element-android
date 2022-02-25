@@ -71,9 +71,10 @@ class CreatePollViewModel @AssistedInject constructor(
         val event = room.getTimeLineEvent(eventId) ?: return
         val content = event.getLastMessageContent() as? MessagePollContent ?: return
 
-        val pollType = content.pollCreationInfo?.kind ?: PollType.DISCLOSED
-        val question = content.pollCreationInfo?.question?.question ?: ""
-        val options = content.pollCreationInfo?.answers?.mapNotNull { it.answer } ?: List(MIN_OPTIONS_COUNT) { "" }
+        val pollCreationInfo = content.getPollCreationInfo()
+        val pollType = pollCreationInfo?.kind ?: PollType.DISCLOSED_UNSTABLE
+        val question = pollCreationInfo?.question?.getQuestion() ?: ""
+        val options = pollCreationInfo?.answers?.mapNotNull { it.getAnswer() } ?: List(MIN_OPTIONS_COUNT) { "" }
 
         setState {
             copy(

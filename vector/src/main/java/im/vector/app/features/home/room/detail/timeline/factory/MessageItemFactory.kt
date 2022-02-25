@@ -247,7 +247,7 @@ class MessageItemFactory @Inject constructor(
         val didUserVoted = pollResponseSummary?.myVote?.isNotEmpty().orFalse()
         val winnerVoteCount = pollResponseSummary?.winnerVoteCount
         val isPollSent = informationData.sendState.isSent()
-        val isPollUndisclosed = pollContent.pollCreationInfo?.kind == PollType.UNDISCLOSED
+        val isPollUndisclosed = pollContent.getPollCreationInfo()?.kind == PollType.UNDISCLOSED_UNSTABLE
 
         val totalVotesText = (pollResponseSummary?.totalVotes ?: 0).let {
             when {
@@ -262,13 +262,13 @@ class MessageItemFactory @Inject constructor(
             }
         }
 
-        pollContent.pollCreationInfo?.answers?.forEach { option ->
+        pollContent.getPollCreationInfo()?.answers?.forEach { option ->
             val voteSummary = pollResponseSummary?.votes?.get(option.id)
             val isMyVote = pollResponseSummary?.myVote == option.id
             val voteCount = voteSummary?.total ?: 0
             val votePercentage = voteSummary?.percentage ?: 0.0
             val optionId = option.id ?: ""
-            val optionAnswer = option.answer ?: ""
+            val optionAnswer = option.getAnswer() ?: ""
 
             optionViewStates.add(
                     if (!isPollSent) {
@@ -291,7 +291,7 @@ class MessageItemFactory @Inject constructor(
             )
         }
 
-        val question = pollContent.pollCreationInfo?.question?.question ?: ""
+        val question = pollContent.getPollCreationInfo()?.question?.getQuestion() ?: ""
 
         return PollItem_()
                 .attributes(attributes)

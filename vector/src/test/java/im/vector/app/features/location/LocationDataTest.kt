@@ -68,14 +68,10 @@ class LocationDataTest {
         val contentWithNullAsset = MessageLocationContent(body = "", geoUri = "")
         contentWithNullAsset.isSelfLocation().shouldBeTrue()
 
-        val contentWithNullAssetType = MessageLocationContent(body = "", geoUri = "").apply {
-            locationAsset = LocationAsset(type = null)
-        }
+        val contentWithNullAssetType = MessageLocationContent(body = "", geoUri = "", unstableLocationAsset = LocationAsset(type = null))
         contentWithNullAssetType.isSelfLocation().shouldBeTrue()
 
-        val contentWithSelfAssetType = MessageLocationContent(body = "", geoUri = "").apply {
-            locationAsset = LocationAsset(type = LocationAssetType.SELF)
-        }
+        val contentWithSelfAssetType = MessageLocationContent(body = "", geoUri = "", unstableLocationAsset = LocationAsset(type = LocationAssetType.SELF))
         contentWithSelfAssetType.isSelfLocation().shouldBeTrue()
     }
 
@@ -83,14 +79,10 @@ class LocationDataTest {
     fun unstablePrefixTest() {
         val geoUri = "geo :12.34,56.78;13.56"
 
-        val contentWithUnstablePrefixes = MessageLocationContent(body = "", geoUri = "").apply {
-            unstableLocationInfo = LocationInfo(geoUri = geoUri)
-        }
-        contentWithUnstablePrefixes.locationInfo?.geoUri.shouldBeEqualTo(geoUri)
+        val contentWithUnstablePrefixes = MessageLocationContent(body = "", geoUri = "", unstableLocationInfo = LocationInfo(geoUri = geoUri))
+        contentWithUnstablePrefixes.getLocationInfo()?.geoUri.shouldBeEqualTo(geoUri)
 
-        val contentWithStablePrefixes = MessageLocationContent(body = "", geoUri = "").apply {
-            stableLocationInfo = LocationInfo(geoUri = geoUri)
-        }
-        contentWithStablePrefixes.locationInfo?.geoUri.shouldBeEqualTo(geoUri)
+        val contentWithStablePrefixes = MessageLocationContent(body = "", geoUri = "", stableLocationInfo = LocationInfo(geoUri = geoUri))
+        contentWithStablePrefixes.getLocationInfo()?.geoUri.shouldBeEqualTo(geoUri)
     }
 }

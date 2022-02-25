@@ -404,12 +404,12 @@ internal class EventRelationsAggregationProcessor @Inject constructor(
             return
         }
 
-        val option = content.response?.answers?.first() ?: return Unit.also {
+        val option = content.getResponse()?.answers?.first() ?: return Unit.also {
             Timber.d("## POLL Ignoring malformed response no option eventId:$eventId content: ${event.content}")
         }
 
         // Check if this option is in available options
-        if (!targetPollContent.pollCreationInfo?.answers?.map { it.id }?.contains(option).orFalse()) {
+        if (!targetPollContent.getPollCreationInfo()?.answers?.map { it.id }?.contains(option).orFalse()) {
             Timber.v("## POLL $targetEventId doesn't contain option $option")
             return
         }

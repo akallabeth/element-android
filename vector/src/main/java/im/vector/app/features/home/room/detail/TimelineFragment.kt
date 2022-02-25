@@ -1188,7 +1188,7 @@ class TimelineFragment @Inject constructor(
             val formattedDuration = DateUtils.formatElapsedTime(((messageContent.audioInfo?.duration ?: 0) / 1000).toLong())
             getString(R.string.voice_message_reply_content, formattedDuration)
         } else if (messageContent is MessagePollContent) {
-            messageContent.pollCreationInfo?.question?.question
+            messageContent.getPollCreationInfo()?.question?.getQuestion()
         } else {
             messageContent?.body ?: ""
         }

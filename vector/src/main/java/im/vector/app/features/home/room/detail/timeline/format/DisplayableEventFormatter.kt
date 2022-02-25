@@ -121,7 +121,7 @@ class DisplayableEventFormatter @Inject constructor(
                 span { }
             }
             in EventType.POLL_START         -> {
-                timelineEvent.root.getClearContent().toModel<MessagePollContent>(catchError = true)?.pollCreationInfo?.question?.question
+                timelineEvent.root.getClearContent().toModel<MessagePollContent>(catchError = true)?.getPollCreationInfo()?.question?.getQuestion()
                         ?: stringProvider.getString(R.string.sent_a_poll)
             }
             in EventType.POLL_RESPONSE      -> {

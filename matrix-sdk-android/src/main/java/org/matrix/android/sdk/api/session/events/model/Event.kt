@@ -372,7 +372,7 @@ fun Event.getRelationContent(): RelationDefaultContent? {
  * Returns the poll question or null otherwise
  */
 fun Event.getPollQuestion(): String? =
-        getPollContent()?.pollCreationInfo?.question?.question
+        getPollContent()?.getPollCreationInfo()?.question?.getQuestion()
 
 /**
  * Returns the relation content for a specific type or null otherwise

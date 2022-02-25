@@ -30,17 +30,10 @@ data class MessagePollContent(
         override val msgType: String = MessageType.MSGTYPE_POLL_START,
         @Json(name = "body") override val body: String = "",
         @Json(name = "m.relates_to") override val relatesTo: RelationDefaultContent? = null,
-        @Json(name = "m.new_content") override val newContent: Content? = null
+        @Json(name = "m.new_content") override val newContent: Content? = null,
+        @Json(name = "org.matrix.msc3381.poll.start") val unstablePollCreationInfo: PollCreationInfo? = null,
+        @Json(name = "m.poll.start") val stablePollCreationInfo: PollCreationInfo? = null
 ) : MessageContent {
 
-    @Json(name = "org.matrix.msc3381.poll.start") var unstablePollCreationInfo: PollCreationInfo? = null
-    @Json(name = "m.poll.start") var stablePollCreationInfo: PollCreationInfo? = null
-
-    @Transient
-    var pollCreationInfo: PollCreationInfo? = null
-    get() = stablePollCreationInfo ?: unstablePollCreationInfo
-    set(value) {
-        field = value
-        unstablePollCreationInfo = value
-    }
+    fun getPollCreationInfo() = stablePollCreationInfo ?: unstablePollCreationInfo
 }
