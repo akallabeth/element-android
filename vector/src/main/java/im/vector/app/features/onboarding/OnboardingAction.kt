@@ -44,20 +44,20 @@ sealed interface OnboardingAction : VectorViewModelAction {
     data class LoginOrRegister(val username: String, val password: String, val initialDeviceName: String) : OnboardingAction
 
     // Register actions
-    open class RegisterAction : OnboardingAction
+    sealed interface RegisterAction : OnboardingAction
 
-    data class AddThreePid(val threePid: RegisterThreePid) : RegisterAction()
-    object SendAgainThreePid : RegisterAction()
+    data class AddThreePid(val threePid: RegisterThreePid) : RegisterAction
+    object SendAgainThreePid : RegisterAction
 
     // TODO Confirm Email (from link in the email, open in the phone, intercepted by the app)
-    data class ValidateThreePid(val code: String) : RegisterAction()
+    data class ValidateThreePid(val code: String) : RegisterAction
 
-    data class CheckIfEmailHasBeenValidated(val delayMillis: Long) : RegisterAction()
-    object StopEmailValidationCheck : RegisterAction()
+    data class CheckIfEmailHasBeenValidated(val delayMillis: Long) : RegisterAction
+    object StopEmailValidationCheck : RegisterAction
 
-    data class CaptchaDone(val captchaResponse: String) : RegisterAction()
-    object AcceptTerms : RegisterAction()
-    object RegisterDummy : RegisterAction()
+    data class CaptchaDone(val captchaResponse: String) : RegisterAction
+    object AcceptTerms : RegisterAction
+    object RegisterDummy : RegisterAction
 
     // Reset actions
     open class ResetAction : OnboardingAction
