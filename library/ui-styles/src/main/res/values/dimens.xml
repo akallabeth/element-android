@@ -67,4 +67,7 @@
 
     <item name="ftue_auth_carousel_item_spacing" format="float" type="dimen">0.01</item>
     <item name="ftue_auth_carousel_item_image_height" format="float" type="dimen">0.35</item>
+
+    <!--  Location sharing   -->
+    <dimen name="location_sharing_option_default_padding">10dp</dimen>
 </resources>
