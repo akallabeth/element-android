@@ -117,7 +117,7 @@ Commit message must be short, one line and valuable. "WIP" is not a good commit 
 
 Also commit history should be nice. Having commits like "Adding temporary code" then later "Removing temporary code" is not good. The branch has to be rebased and those commit have to be dropped.
 
-PR merger could decide to squash and merge if commit history is not code.
+PR merger could decide to squash and merge if commit history is not good.
 
 Commit like "Code review fixes" is good when reviewing the PR, since new changes can be reviewed easily, but is less valuable when looking at git history. I have no good solution to avoid this.
 
