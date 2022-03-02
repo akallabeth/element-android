@@ -143,7 +143,7 @@ Note that you have to repeat the keyword in case of a list of issue
 > Closes #1, Closes #2, etc.
 
 When PR will be merged, such referenced issue will be automatically closed.
-It up to the person who has merged the PR to go to the (closed) issue(s) and to add a comment to inform in which version the issue fix will be available. Use the current version of develop branch.
+It is up to the person who has merged the PR to go to the (closed) issue(s) and to add a comment to inform in which version the issue fix will be available. Use the current version of develop branch.
 
 > Closed in Element Android v1.x.y
 
