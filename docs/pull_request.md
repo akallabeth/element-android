@@ -30,7 +30,7 @@ In any case, it is better to explicitly declare in the description why the PR is
 
 ##### Assigned to reviewer?
 
-For the moment we do not directly assign PR to ask for a review. In the future we could have some automation to do that. Anyway the core team should have a look to every PR, even when not digging into details. More reviewers, more eys on the code change, more valuable feedback!
+For the moment we do not directly assign PR to ask for a review. In the future we could have some automation to do that. Anyway the core team should have a look to every PR, even when not digging into details. More reviewers, more eyes on the code change, more valuable feedback!
 
 ##### When create split PR?
 
