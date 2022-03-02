@@ -85,7 +85,7 @@ But comment in PR from the community are always appreciated!
 ### What to have in mind when reviewing a PR
 
 1. User experience: is the UX and UI correct? You will probably be the second person to test the new thing, the first one is the developer.
-2. Developer experience: does the code looks nice and decoupled? No big functions, etc.
+2. Developer experience: does the code look nice and decoupled? No big functions, etc.
 3. Code maintenance. A bit similar to point 2. Tricky code must be documented for instance
 4. Fork consideration. Is configuration of forks will be easy? Some documentation may help in some cases.
 
